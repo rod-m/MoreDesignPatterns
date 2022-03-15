@@ -19,8 +19,7 @@ public class EnemyTargeting : MonoBehaviour
     private void Update()
     {
         // A: get target prediction
-        Vector3 aimLoc = Targeting.GetMovingTarget(transform.position, bulletVelocity, target.transform.position,
-            target_rb.velocity);
+        var aimLoc = AimLoc();
         // B: Rotate transform to target
         Targeting.RotateToTarget(transform, aimLoc, speedRotation);
         // C: shoot a missile at target
@@ -31,5 +30,12 @@ public class EnemyTargeting : MonoBehaviour
             brb.AddForce(transform.forward * bulletVelocity, ForceMode.Impulse);
             Destroy(b.gameObject, 3f);
         }
+    }
+
+    public Vector3 AimLoc()
+    {
+        Vector3 aimLoc = Targeting.GetMovingTarget(transform.position, bulletVelocity, target.transform.position,
+            target_rb.velocity);
+        return aimLoc;
     }
 }
