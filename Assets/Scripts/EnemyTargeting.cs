@@ -11,8 +11,7 @@ namespace DefaultNamespace
         public Transform gunBarrel;
         public float bulletVelocity = 5f;
         public GameObject target;
- 
-       public float speedRotation = 9f;
+        public float speedRotation = 9f;
         private int shootDelay = 90;
         private Rigidbody target_rb;
         private void Start()
