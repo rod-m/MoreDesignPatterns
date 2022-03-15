@@ -1,4 +1,5 @@
-﻿using MathHelpers;
+﻿using System;
+using MathHelpers;
 using UnityEngine;
 
 public class EnemyTargeting : MonoBehaviour
@@ -11,8 +12,14 @@ public class EnemyTargeting : MonoBehaviour
     private int shootDelay = 90;
    
 
-    private AimingMovingTarget _aimingMovingTarget;
- 
+    private IAimingMovingTarget _aimingMovingTarget;
+
+    private void Start()
+    {
+        _aimingMovingTarget = GetComponent<IAimingMovingTarget>();
+        _aimingMovingTarget.SetVelocity(bulletVelocity);
+    }
+
     private void Update()
     {
         // A: get target prediction
@@ -27,23 +34,5 @@ public class EnemyTargeting : MonoBehaviour
             brb.AddForce(transform.forward * bulletVelocity, ForceMode.Impulse);
             Destroy(b.gameObject, 3f);
         }
-    }
-}
-
-internal class AimingMovingTarget : MonoBehaviour
-{
-    private Rigidbody target_rb;
-    public GameObject target;
-    public float bulletVelocity = 5f;
-    private void Start()
-    {
-        target_rb = target.GetComponent<Rigidbody>();
-    }
-
-    public Vector3 AimLoc()
-    {
-        Vector3 aimLoc = Targeting.GetMovingTarget(transform.position, bulletVelocity, target.transform.position,
-            target_rb.velocity);
-        return aimLoc;
     }
 }
